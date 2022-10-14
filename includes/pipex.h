@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 17:48:38 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/11 20:50:27 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:47:24 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,13 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <string.h>
+
+void	cmd1(char **argv, char **envp, int *fd);
+void	cmd2(char **argv, char **envp, int *fd);
+int		main(int argc, char **argv, char **envp);
+char	*find_path(char *cmd, char **envp);
+void	my_cmd(char *argv, char **envp);
+void	error_msg(void);
+
 #endif

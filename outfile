@@ -1,8 +1,0 @@
-total 40
--rw-r--r--  1 emilieminatchy  staff  1183  9 oct 17:13 Makefile
--rw-r--r--  1 emilieminatchy  staff    11 10 oct 19:20 infile
--rw-r--r--  1 emilieminatchy  staff    84  9 oct 17:13 main.c
--rw-r--r--  1 emilieminatchy  staff     0 10 oct 19:41 outfile
--rw-r--r--  1 emilieminatchy  staff  1141  9 oct 17:21 pipex.c
--rw-r--r--  1 emilieminatchy  staff  1057  9 oct 17:13 pipex.h
--rw-r--r--  1 emilieminatchy  staff     0  9 oct 17:13 pipex_utils.c

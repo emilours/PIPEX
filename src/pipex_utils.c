@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 18:08:38 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/11 20:39:04 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/14 18:28:45 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*find_path(char *cmd, char **envp)
 		parts = ft_strjoin(my_paths[i], "/");
 		path_from_envp = ft_strjoin(parts, cmd);
 		free(parts);
-		if ((access(path_from_envp, F_OK)) == 0)
+		if ((access(path_from_envp, F_OK | X_OK)) == 0)
 			return (path_from_envp);
 		free(path_from_envp);
 		i++;
@@ -44,19 +44,23 @@ char	*find_path(char *cmd, char **envp)
 void	my_cmd(char *argv, char **envp)
 {
 	char	**cmd;
-	int 	i;
+	int		i;
 	char	*path;
 
 	i = -1;
 	cmd = ft_split(argv, ' ');
+	if (!cmd || !cmd[0])
+	{
+		perror("command not found");
+		exit(EXIT_FAILURE);
+	}
 	path = find_path(cmd[0], envp);
 	if (!path)
 	{
 		while (cmd[i++])
 			free(cmd[i]);
 		free(cmd);
-		perror("No access to path");
 	}
 	if (execve(path, cmd, envp) == -1)
-		perror("Bad execution");
+		perror("bad execution of execve");
 }

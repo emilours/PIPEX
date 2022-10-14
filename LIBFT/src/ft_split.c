@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 15:31:45 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/11 20:40:35 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:42:54 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,24 +89,24 @@ char	**ft_split(char const *s, char c)
 	return (tab);
 }
 
-// int    main(void)
-// {
-//     int        i;
-//     char    charset = ' ';
-//     char    *tab = "  tripouille  42   blabla   ";
-//     char    **result;
+/*int	main(void)
+{
+	int		i;
+	char		charset = ' ';
+	char		*tab = " tripouille  42   blabla   ";
+	char		**result;
 
-//     i = 0;
-//     result = ft_split(tab, charset);
-//     while (result[i])
-//     {
-//         printf("%s\n", result[i]);
-//         i++;
-//     }
-//     for (size_t j = 0; result[j]; j++)
-//     {
-//         free(result[j]);
-//     }
-//     free(result);
-//     return (0);
-// }
+	i = 0;
+	result = ft_split(tab, charset);
+	while (result[i])
+	{
+		printf("%s\n", result[i]);
+		i++;
+	}
+	for (size_t j = 0; result[j]; j++)
+	{
+		free(result[j]);
+	}
+	free(result);
+	return (0);
+}*/

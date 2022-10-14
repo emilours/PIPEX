@@ -6,7 +6,7 @@
 #    By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 17:48:29 by eminatch          #+#    #+#              #
-#    Updated: 2022/10/11 21:01:33 by eminatch         ###   ########.fr        #
+#    Updated: 2022/10/12 17:52:32 by eminatch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,7 @@ OBJ_PATH	= obj/
 LIB		= -L./LIBFT -lft 
 
 CC = clang
-#CFLAGS = -Wall -Wextra -Werror -g3 -MMD -MP
-CFLAGS = -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -g3 -MMD -MP
 SRC = pipex.c \
 	pipex_utils.c \
 
@@ -51,7 +50,7 @@ clean:
 	@echo "\nClean Pipex ✨\n"
 
 fclean: clean
-	${RM} $(NAME)
+	@${RM} $(NAME)
 
 re: fclean all
 
@@ -62,7 +61,7 @@ ___    _  ___    ___    _    _            __     ___           _  _   _  _____  
 | ,__/'| || ,__/'|  _)_   >  <        /' /'      |  _)_ | (_) || || , ` ||  _  |  | |  | |  _ |  _  |
 | |    | || |    | (_( ) /'/\`\     /' /'        | (_( )| | | || || |`\ || | | |  | |  | (_( )| | | |
 (_)    (_)(_)    (____/'(_)  (_)   (_/'          (____/'(_) (_)(_)(_) (_)(_) (_)  (_)  (____/'(_) (_)                                                                                                                                                                                                                                                                                                                                                                                                    
-                                                                                                       
+                                                                                                      
 endef
 export HEADER
 
