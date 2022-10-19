@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 18:08:38 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/18 21:52:55 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/19 19:35:44 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*find_path(char *cmd, char **envp)
 	if (cmd[i] == '.' && cmd[i + 1] == '/')
 	{
 		write(2, &cmd[i++], ft_strlen(cmd));
-		write(2, ": No such file or directory\n", 28);
+		write(2, strerror(errno), ft_strlen(strerror(errno)));;
 	}
 	if (access(cmd, F_OK || X_OK) == 0)
 		return (cmd);
@@ -60,6 +60,7 @@ void	my_cmd(char *argv, char **envp)
 	path = find_path(cmd[0], envp);
 	if (path == NULL)
 	{
+		free(cmd);
 		exit(127);
 	}
 	else if (execve(path, cmd, envp) == -1)
