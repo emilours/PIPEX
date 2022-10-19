@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 18:08:38 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/19 19:35:44 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/19 21:02:49 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	*find_path(char *cmd, char **envp)
 	if (cmd[i] == '.' && cmd[i + 1] == '/')
 	{
 		write(2, &cmd[i++], ft_strlen(cmd));
-		write(2, strerror(errno), ft_strlen(strerror(errno)));;
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		return (NULL);
 	}
 	if (access(cmd, F_OK || X_OK) == 0)
 		return (cmd);
@@ -49,13 +50,35 @@ char	*find_path(char *cmd, char **envp)
 	return (NULL);
 }
 
+int	space(char *argv)
+{
+	int	len;
+	int	i;
+	
+	len = ft_strlen(argv) - 1;
+	i = 0;
+	if (argv[i] == ' ')
+			return (1);
+	while (argv[i])
+	{
+		if (argv[0] == ' ')
+			return (1);
+		if (argv[len] == ' ')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	my_cmd(char *argv, char **envp)
 {
 	char	**cmd;
 	int		i;
 	char	*path;
-
+	
 	i = -1;
+	if (space(argv) == 1)
+		return ;
 	cmd = ft_split(argv, ' ');
 	path = find_path(cmd[0], envp);
 	if (path == NULL)

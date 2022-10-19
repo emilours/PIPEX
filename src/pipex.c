@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 18:03:12 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/19 19:35:33 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/19 21:01:08 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int	main(int argc, char **argv, char **envp)
 	exit(pipex.exit_code);
 	return (0);
 }
-
 
 /*
 

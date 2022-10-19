@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 17:48:38 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/19 19:17:30 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/19 20:56:17 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void	my_cmd(char *argv, char **envp);
 void	error_msg(void);
 void	ft_init_cmd(t_pipex *pipex);
 void	ft_free(char **str);
+int	space(char *argv);
 
 #endif
