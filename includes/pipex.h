@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 17:48:38 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/19 20:56:17 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:12:50 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@ typedef struct	s_pipex
         int	status;
         
 }		t_pipex;
+
+enum e_error
+{
+        err_infile = 100,
+        err_outfile = 101,
+        err_badfork = 102,
+        err_badpath = 103,
+        err_badcmd = 104
+};
 
 void	cmd1(char **argv, char **envp, int i, t_pipex *pipex);
 // void cmd1(char **argv, char **envp, int *fd, int i, int infile, int outfile);

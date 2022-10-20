@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 18:08:38 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/19 21:02:49 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/20 22:30:02 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ char	*find_path(char *cmd, char **envp)
 	if (cmd == NULL )
 		return (NULL);
 	if (cmd[i] == '.' && cmd[i + 1] == '/')
-	{
+	{	
+		write(2, "pipex: ", 8);
 		write(2, &cmd[i++], ft_strlen(cmd));
-		write(2, strerror(errno), ft_strlen(strerror(errno)));
-		return (NULL);
+		write(2, ": No such file or directory\n", 29);
+		exit(127);
+		// return (NULL);
 	}
 	if (access(cmd, F_OK || X_OK) == 0)
 		return (cmd);
@@ -57,8 +59,8 @@ int	space(char *argv)
 	
 	len = ft_strlen(argv) - 1;
 	i = 0;
-	if (argv[i] == ' ')
-			return (1);
+	 if (argv[i] == ' ')
+	 		return (1);
 	while (argv[i])
 	{
 		if (argv[0] == ' ')
@@ -78,17 +80,19 @@ void	my_cmd(char *argv, char **envp)
 	
 	i = -1;
 	if (space(argv) == 1)
-		return ;
+		exit(127);
 	cmd = ft_split(argv, ' ');
 	path = find_path(cmd[0], envp);
 	if (path == NULL)
 	{
 		free(cmd);
+		perror("pipex:");
+		//write(2, "pipex3: : command not found\n", 28);
 		exit(127);
 	}
 	else if (execve(path, cmd, envp) == -1)
 	{
-		perror("bash: ");
+		perror("pipex:");
 		exit(127);
 	}
 }
