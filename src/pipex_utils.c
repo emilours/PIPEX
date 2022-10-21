@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 18:08:38 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/20 22:30:02 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:23:04 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@ char	*find_path(char *cmd, char **envp)
 	i = 0;
 	if (cmd == NULL )
 		return (NULL);
+	if (cmd[i] == '.' && cmd[i + 1] != '/')
+	{
+		ft_err(cmd, "command not found");
+		write(2, "\n", 1);
+		exit(127);
+	}
 	if (cmd[i] == '.' && cmd[i + 1] == '/')
 	{	
-		write(2, "pipex: ", 8);
-		write(2, &cmd[i++], ft_strlen(cmd));
-		write(2, ": No such file or directory\n", 29);
+		ft_err(cmd, "No such file or directory");
+		write(2, "\n", 1);
 		exit(127);
-		// return (NULL);
 	}
 	if (access(cmd, F_OK || X_OK) == 0)
 		return (cmd);
@@ -56,15 +60,31 @@ int	space(char *argv)
 {
 	int	len;
 	int	i;
-	
+	int	count_space;
+
 	len = ft_strlen(argv) - 1;
 	i = 0;
-	 if (argv[i] == ' ')
-	 		return (1);
+	count_space = 0;
+	if (argv[i] == ' ')
+		return (1);
 	while (argv[i])
 	{
 		if (argv[0] == ' ')
 			return (1);
+		if (argv && argv[0] != ' ')
+		{
+			while (argv && argv[i] != ' ')
+				i++;
+			while (argv[i] == ' ')
+			{
+				count_space++;
+				i++;
+			}
+			if (count_space == 1)
+				return (0);
+			if (count_space > 1)
+				return (1);
+		}
 		if (argv[len] == ' ')
 			return (1);
 		i++;
@@ -72,27 +92,37 @@ int	space(char *argv)
 	return (0);
 }
 
+void	ft_err(char *ft, char *err)
+{
+	ft_putstr_fd("pipex: ", 2);
+	ft_putstr_fd(ft, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(err, 2);
+}
+
 void	my_cmd(char *argv, char **envp)
 {
 	char	**cmd;
 	int		i;
 	char	*path;
-	
+
 	i = -1;
 	if (space(argv) == 1)
+	{
+		ft_err(argv, "command not found\n");
 		exit(127);
+	}
 	cmd = ft_split(argv, ' ');
 	path = find_path(cmd[0], envp);
 	if (path == NULL)
 	{
+		ft_err(*cmd, "command not found\n");
 		free(cmd);
-		perror("pipex:");
-		//write(2, "pipex3: : command not found\n", 28);
 		exit(127);
 	}
 	else if (execve(path, cmd, envp) == -1)
 	{
-		perror("pipex:");
+		// perror("pipex1:");
 		exit(127);
 	}
 }

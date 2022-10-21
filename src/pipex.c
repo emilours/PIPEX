@@ -6,14 +6,15 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 18:03:12 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/20 22:42:53 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:35:18 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
 void	ft_free(char **str)
-{	int	i;
+{	
+	int	i;
 
 	i = 0;
 	if (!str)
@@ -22,7 +23,6 @@ void	ft_free(char **str)
 		free(str[i++]);
 	free(str);
 }
-
 
 //donner valeurs erreur en initiaisant pour voir si changement par
 //la suite dans fonction
@@ -46,9 +46,7 @@ void	cmd1(char **argv, char **envp, int i, t_pipex *pipex)
 		pipex->infile = open(argv[1], O_RDONLY);
 		if (pipex->infile == -1)
 		{
-			write(2, "pipex: ", 8);
-			write(2, &argv[1][i++], ft_strlen(argv[1]));
-			perror(" ");
+			ft_err(argv[1], strerror(errno));
 			write(2, "\n", 1);
 			exit(errno);
 		}
@@ -62,7 +60,14 @@ void	cmd1(char **argv, char **envp, int i, t_pipex *pipex)
 		pipex->outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (pipex->outfile == -1)
 		{
-			perror("pipex: out");
+			if (argv[4][0] == '.' && argv[4][1] == '/')
+			{
+				ft_err(argv[4], "Is a directory");
+				write(2, "\n", 1);
+				exit(1);
+			}
+			ft_err(argv[4], strerror(errno));
+			write(2, "\n", 1);
 			exit(1);
 		}
 		dup2(pipex->pipefd[0], STDIN_FILENO);
@@ -72,7 +77,6 @@ void	cmd1(char **argv, char **envp, int i, t_pipex *pipex)
 	}
 	close(pipex->pipefd[1]);
 	close(pipex->pipefd[0]);
-
 	my_cmd(argv[i + 2], envp);
 }
 
@@ -80,9 +84,9 @@ void	cmd1(char **argv, char **envp, int i, t_pipex *pipex)
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
-	int i = -1;
+	int	i = -1;
 	int	j = -1;
-	
+
 	ft_init_cmd(&pipex);
 	if (argc <= 5)
 	{

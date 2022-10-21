@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 16:28:19 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/19 14:57:46 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:47:25 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@ void	ft_putstr_fd(char *s, int fd)
 {
 	if (!s || fd < 0)
 		return ;
-	write (fd, &s, ft_strlen(s));
+	if (s)
+		write (fd, s, ft_strlen(s));
 }
