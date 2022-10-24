@@ -6,35 +6,39 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 18:03:12 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/21 17:35:18 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:05:40 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	ft_free(char **str)
-{	
+char	**ft_free(char **str)
+{
 	int	i;
 
 	i = 0;
-	if (!str)
-		return ;
-	while (str[i])
-		free(str[i++]);
+	while (str[i] != NULL)
+	{
+		free(str[i]);
+		i++;
+	}
 	free(str);
+	return (NULL);
 }
 
-//donner valeurs erreur en initiaisant pour voir si changement par
+//donner valeurs erreur en initialisant pour voir si changement par
 //la suite dans fonction
-void	ft_init_cmd(t_pipex *pipex)
+void	ft_init_cmd(t_pipex *pipex, char **argv)
 {
-    pipex->infile = -1;
+	pipex->infile = -1;
 	pipex->outfile = -1;
 	pipex->exit_code = 0;
 	pipex->status = 0;
 	pipex->pid = 0;
 	pipex->pipefd[0] = -1;
 	pipex->pipefd[1] = -1;
+	pipex->count_space = ft_strlen(*argv) - 1;
+	pipex->len = 0;
 }
 
 // je recois un pointeur en parametre > struc = ->
@@ -77,17 +81,21 @@ void	cmd1(char **argv, char **envp, int i, t_pipex *pipex)
 	}
 	close(pipex->pipefd[1]);
 	close(pipex->pipefd[0]);
-	my_cmd(argv[i + 2], envp);
+	my_cmd(argv[i + 2], envp, pipex);
+	if (argv == NULL)
+		ft_free(argv);
 }
 
 // &pipex: valeur modifiee / pipex: valeur lue //
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
-	int	i = -1;
-	int	j = -1;
+	int		i;
+	int		j;
 
-	ft_init_cmd(&pipex);
+	i = -1;
+	j = -1;
+	ft_init_cmd(&pipex, argv);
 	if (argc <= 5)
 	{
 		if (pipe(pipex.pipefd) == -1)
@@ -99,7 +107,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			pipex.pid = fork();
 			if (pipex.pid == -1)
-				perror("pipex:");
+				perror("pipex: ");
 			if (pipex.pid == 0)
 				cmd1(argv, envp, i, &pipex);
 		}
@@ -112,6 +120,23 @@ int	main(int argc, char **argv, char **envp)
 				pipex.exit_code = WEXITSTATUS(pipex.status);
 		}
 	}
+	if (argv == NULL)
+		ft_free(argv);
 	exit(pipex.exit_code);
 	return (0);
 }
+
+/*
+int	main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	if (!envp)
+		printf("Envp ok\n");
+	if (!*envp)
+		printf("*Envp ok\n");
+	if (!envp[0])
+		printf("Envp[0] ok\n");
+	return (0);
+}
+*/

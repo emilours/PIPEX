@@ -6,7 +6,7 @@
 #    By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 17:48:29 by eminatch          #+#    #+#              #
-#    Updated: 2022/10/12 17:52:32 by eminatch         ###   ########.fr        #
+#    Updated: 2022/10/24 18:58:09 by eminatch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJ_PATH	= obj/
 LIB		= -L./LIBFT -lft 
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -g3 -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -g -MMD -MP
 SRC = pipex.c \
 	pipex_utils.c \
 

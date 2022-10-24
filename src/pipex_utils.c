@@ -6,13 +6,13 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 18:08:38 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/21 18:23:04 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:52:14 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-char	*find_path(char *cmd, char **envp)
+char	*find_path(char *cmd, < >)
 {
 	char	**my_paths;
 	char	*path_from_envp;
@@ -24,20 +24,19 @@ char	*find_path(char *cmd, char **envp)
 		return (NULL);
 	if (cmd[i] == '.' && cmd[i + 1] != '/')
 	{
-		ft_err(cmd, "command not found");
-		write(2, "\n", 1);
-		exit(127);
+		ft_err(cmd, "command not found\n");
+		return (NULL);
 	}
 	if (cmd[i] == '.' && cmd[i + 1] == '/')
 	{	
 		ft_err(cmd, "No such file or directory");
 		write(2, "\n", 1);
-		exit(127);
+		return (NULL);
 	}
 	if (access(cmd, F_OK || X_OK) == 0)
 		return (cmd);
 	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
-		i++;
+			i++;
 	my_paths = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (my_paths[++i])
@@ -56,36 +55,30 @@ char	*find_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-int	space(char *argv)
+int	space(char *argv, t_pipex *pipex)
 {
-	int	len;
 	int	i;
-	int	count_space;
 
-	len = ft_strlen(argv) - 1;
 	i = 0;
-	count_space = 0;
-	if (argv[i] == ' ')
-		return (1);
 	while (argv[i])
 	{
 		if (argv[0] == ' ')
 			return (1);
 		if (argv && argv[0] != ' ')
 		{
-			while (argv && argv[i] != ' ')
+			while (argv[i] != '\0' && argv[i] != ' ')
 				i++;
 			while (argv[i] == ' ')
 			{
-				count_space++;
+				pipex->count_space++;
 				i++;
 			}
-			if (count_space == 1)
-				return (0);
-			if (count_space > 1)
+			if (pipex->count_space == 1)
 				return (1);
+			if (pipex->count_space > 1)
+				return (0);
 		}
-		if (argv[len] == ' ')
+		if (argv[pipex->len] == ' ')
 			return (1);
 		i++;
 	}
@@ -100,14 +93,14 @@ void	ft_err(char *ft, char *err)
 	ft_putstr_fd(err, 2);
 }
 
-void	my_cmd(char *argv, char **envp)
+void	my_cmd(char *argv, char **envp, t_pipex *pipex)
 {
 	char	**cmd;
 	int		i;
 	char	*path;
 
 	i = -1;
-	if (space(argv) == 1)
+	if (space(argv, pipex) == 1)
 	{
 		ft_err(argv, "command not found\n");
 		exit(127);
@@ -116,13 +109,14 @@ void	my_cmd(char *argv, char **envp)
 	path = find_path(cmd[0], envp);
 	if (path == NULL)
 	{
-		ft_err(*cmd, "command not found\n");
-		free(cmd);
+		if (cmd[0] == NULL)
+			ft_err(*cmd, "command not found\n");
+		ft_free(cmd);
 		exit(127);
 	}
 	else if (execve(path, cmd, envp) == -1)
 	{
-		// perror("pipex1:");
+		ft_free(cmd);
 		exit(127);
 	}
 }

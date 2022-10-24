@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:42:20 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/11 20:39:51 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:12:30 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,16 @@
 
 void	*ft_calloc(size_t nb, size_t size)
 {
-	void	*s;
+	void	*res;
 
-	if (size && (size * nb) / size != nb)
-		return (NULL);
-	if (nb == 0 || size == 0)
+	res = malloc(nb * size);
+	if (res == NULL)
 	{
-		s = malloc(sizeof(char));
-		if (s == NULL)
-			return (NULL);
-		return (s);
-	}
-	s = malloc(size * nb);
-	if (s == NULL)
+		free(res);
 		return (NULL);
-	ft_bzero(s, nb * size);
-	return (s);
+	}
+	ft_bzero(res, nb * size);
+	return (res);
 }
 /*Cette fonction alloue un bloc de mémoire en initialisant 
 tous ces octets à la valeur 0. Diff avec malloc :
