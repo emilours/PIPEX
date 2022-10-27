@@ -6,7 +6,7 @@
 #    By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 17:48:29 by eminatch          #+#    #+#              #
-#    Updated: 2022/10/24 18:58:09 by eminatch         ###   ########.fr        #
+#    Updated: 2022/10/27 20:15:56 by eminatch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ CC = clang
 CFLAGS = -Wall -Wextra -Werror -g -MMD -MP
 SRC = pipex.c \
 	pipex_utils.c \
-
+	error_field.c \
+	
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:.c=.o)
 OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   error_field.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/27 19:56:51 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/27 23:14:07 by eminatch         ###   ########.fr       */
+/*   Created: 2022/10/27 20:03:07 by eminatch          #+#    #+#             */
+/*   Updated: 2022/10/27 20:10:50 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,70 +24,63 @@
 
 #include "../includes/pipex.h"
 
-char	*find_path(char *cmd, char **envp, t_pipex *pipex)
+//donner valeurs erreur en initiaisant pour voir si changement par
+//la suite dans fonction
+void	ft_init_cmd(t_pipex *pipex)
 {
-	int		i;
+	pipex->infile = -1;
+	pipex->outfile = -1;
+	pipex->exit_code = 0;
+	pipex->status = 0;
+	pipex->pipefd[0] = -1;
+	pipex->pipefd[1] = -1;
+	pipex->parts = NULL;
+	pipex->path_from_envp = NULL;
+	pipex->my_paths = NULL;
+	pipex->path = NULL;
+}
+
+char	**ft_free(char **str)
+{
+	int	i;
 
 	i = 0;
-	if (dot_or_slash_case(cmd) != 0)
-		return (NULL);
-	if (access(cmd, F_OK || X_OK) == 0)
-		return (cmd);
-	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
-		i++;
-	if (envp[i])
-		pipex->my_paths = ft_split(envp[i] + 5, ':');
-	i = 0;
-	while (pipex->my_paths && pipex->my_paths[i])
+	while (str[i] != NULL)
 	{
-		pipex->parts = ft_strjoin(pipex->my_paths[i], "/");
-		pipex->path_from_envp = ft_strjoin(pipex->parts, cmd);
-		free(pipex->parts);
-		if ((access(pipex->path_from_envp, F_OK | X_OK)) == 0)
-			return (pipex->path_from_envp);
-		free(pipex->path_from_envp);
+		free(str[i]);
 		i++;
 	}
-	i = 0;
-	ft_free(pipex->my_paths);
+	free(str);
 	return (NULL);
 }
 
-void	check_path(char **envp, t_pipex *pipex, char **cmd)
+int	dot_or_slash_case(char *cmd)
 {
-	if (pipex->path == NULL)
-	{
-		if (dot_or_slash_case(*cmd) == 2 && access(*cmd, X_OK))
-		{
-			ft_err(*cmd, strerror(errno));
-			write(2, "\n", 1);
-		}
-		else
-			ft_err(*cmd, "command not found\n");
-		ft_free(cmd);
-		exit(127);
-	}
-	else if (access(pipex->path, X_OK) == 0)
-	{
-		if (execve(pipex->path, cmd, envp) == -1)
-		{
-			free(pipex->path);
-			ft_free(cmd);
-			exit(127);
-		}
-	}
+	if (cmd == NULL )
+		return (1);
+	if (cmd[0] == '.' && cmd[1] != '/')
+		return (1);
+	if (cmd[0] == '.' && cmd[1] == '/')
+		return (2);
+	if (cmd[0] == '/' && access(cmd, X_OK) != 0)
+		return (2);
+	return (0);
 }
 
-void	cmd_process(char *argv, char **envp, t_pipex *pipex)
+int	space(char *argv)
 {
-	char	**cmd;
+	int	len;
 
-	if (space(argv) == 1)
-	{
-		ft_err(argv, "command not found\n");
-		exit(127);
-	}
-	cmd = ft_split(argv, ' ');
-	pipex->path = find_path(cmd[0], envp, pipex);
-	check_path(envp, pipex, cmd);
+	len = ft_strlen(argv) - 1;
+	if (argv[0] == ' ' || argv[len] == ' ')
+		return (1);
+	return (0);
+}
+
+void	ft_err(char *ft, char *err)
+{
+	ft_putstr_fd("pipex: ", 2);
+	ft_putstr_fd(ft, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(err, 2);
 }

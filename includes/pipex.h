@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 17:48:38 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/24 15:00:44 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/10/27 20:15:36 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,32 @@
 
 typedef struct s_pipex
 {
-	int	exit_code;
-	int	infile;
-	int	outfile;
-	int	pipefd[2];
-	int	pid;
-	int	status;
-	int files[3];
-	int	count_space;
-	int	len;
+	int		exit_code;
+	int		infile;
+	int		outfile;
+	int		pipefd[2];
+	int		pid[2];
+	int		status;
+	int		files[3];
+	char	*parts;
+	char	*path_from_envp;
+	char	**my_paths;
+	char	*path;
+}			t_pipex;
 
-}		t_pipex;
-
-void	cmd1(char **argv, char **envp, int i, t_pipex *pipex);
+void	child_process(char **argv, char **envp, int i, t_pipex *pipex);
 int		main(int argc, char **argv, char **envp);
-char	*find_path(char *cmd, char **envp);
-void	my_cmd(char *argv, char **envp, t_pipex *pipex);
+char	*find_path(char *cmd, char **envp, t_pipex *pipex);
+void	cmd_process(char *argv, char **envp, t_pipex *pipex);
 void	error_msg(void);
-void	ft_init_cmd(t_pipex *pipex, char **argv);
+void	ft_init_cmd(t_pipex *pipex);
 char	**ft_free(char **str);
 void	ft_err(char *ft, char *err);
-int		space(char *argv, t_pipex *pipex);
+int		space(char *argv);
+int		dot_or_slash_case(char *cmd);
+
+void	infile_process(char **argv, int i, t_pipex *pipex);
+void	outfile_process(char **argv, int i, t_pipex *pipex);
+void	close_and_wait(t_pipex *pipex);
 
 #endif
