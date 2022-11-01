@@ -6,16 +6,16 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 15:31:45 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/25 12:19:46 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/11/01 17:07:58 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-# include <stdio.h>
+// # include <stdio.h>
 
-static int    tot_len(const char *s, char c)
+static int	tot_len(const char *s, char c)
 {
-	int    len;
+	int	len;
 
 	len = 0;
 	while (s[len] != '\0' && s[len] != c)
@@ -23,10 +23,10 @@ static int    tot_len(const char *s, char c)
 	return (len);
 }
 
-int    ft_word_count(const char *s, char c)
+int	ft_word_count(const char *s, char c)
 {
-	int    i;
-	int    count;
+	int	i;
+	int	count;
 
 	count = 0;
 	i = 0;
@@ -42,10 +42,10 @@ int    ft_word_count(const char *s, char c)
 	return (count);
 }
 
-char    *ft_strddup(const char *s, char c)
+char	*ft_strddup(const char *s, char c)
 {
-	int        i;
-	char    *str;
+	int		i;
+	char	*str;
 
 	i = 0;
 	str = ft_calloc(tot_len(s, c) + 1, sizeof(char));
@@ -60,7 +60,7 @@ char    *ft_strddup(const char *s, char c)
 	return (str);
 }
 
-char static    **ft_free(char **tab, int i)
+char static	**ft_free(char **tab, int i)
 {
 	while (i >= 0)
 	{
@@ -71,10 +71,10 @@ char static    **ft_free(char **tab, int i)
 	return (NULL);
 }
 
-char    **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	size_t    i;
-	char    **tab;
+	size_t	i;
+	char	**tab;
 
 	i = 0;
 	if (s == NULL)

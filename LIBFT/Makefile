@@ -6,7 +6,7 @@
 #    By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 19:42:17 by eminatch          #+#    #+#              #
-#    Updated: 2022/10/11 21:00:52 by eminatch         ###   ########.fr        #
+#    Updated: 2022/11/01 13:50:15 by eminatch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,5 +82,7 @@ fclean: clean
 re: fclean all
 
 -include ${DEPS}
+
+.SECONDARY : ${OBJ} ${OBJ_PATH} ${OBJS}
 
 .PHONY :  all clean fclean re

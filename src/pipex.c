@@ -6,24 +6,14 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 19:57:06 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/27 23:15:59 by eminatch         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 14:28:33 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/10/26 20:29:27 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/11/01 17:28:39 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
+/* Open creates a new open file description, with flags.
+ Dup allocates a new fd that refers to the same open fd as the oldfd*/
 void	infile_process(char **argv, int i, t_pipex *pipex)
 {
 	if (i == 0)
@@ -60,8 +50,6 @@ void	outfile_process(char **argv, int i, t_pipex *pipex)
 	}
 }
 
-// je recois un pointeur en parametre > struc = ->
-// si R, alors declare struc en variable > .
 void	child_process(char **argv, char **envp, int i, t_pipex *pipex)
 {
 	if (i == 0)
@@ -71,10 +59,12 @@ void	child_process(char **argv, char **envp, int i, t_pipex *pipex)
 	close(pipex->pipefd[1]);
 	close(pipex->pipefd[0]);
 	cmd_process(argv[i + 2], envp, pipex);
-	// if (argv == NULL)
-	// 	ft_free(argv);
 }
 
+/* The wait call suspends execution of the calling process 
+until one of its children terminates. Wifexited returns true 
+if the child terminated normally and allow wifexitstatus, 
+the exit status of the child */
 void	close_and_wait(t_pipex *pipex)
 {
 	int	j;
@@ -90,6 +80,11 @@ void	close_and_wait(t_pipex *pipex)
 	}
 }
 
+/* pipe creates unidirectional data channel that can be
+used for interprocess communication. fork creates a new 
+process by duplicating the calling process. The new process
+is referred to as the child process and calling
+process is referred to as the parent process. */
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;

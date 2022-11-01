@@ -6,7 +6,7 @@
 #    By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/14 17:48:29 by eminatch          #+#    #+#              #
-#    Updated: 2022/10/27 20:15:56 by eminatch         ###   ########.fr        #
+#    Updated: 2022/11/01 13:52:03 by eminatch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,5 +71,7 @@ header :
 	@echo "$$HEADER"
 
 -include ${DEPS}
+
+.SECONDARY : ${OBJ} ${OBJ_PATH} ${OBJS}
 
 .PHONY : all clean fclean re

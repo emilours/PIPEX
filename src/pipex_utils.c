@@ -6,24 +6,13 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 19:56:51 by eminatch          #+#    #+#             */
-/*   Updated: 2022/10/27 23:14:07 by eminatch         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 14:28:28 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/10/26 20:44:17 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/11/01 17:43:49 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
+/* find PATH in envp variable */
 char	*find_path(char *cmd, char **envp, t_pipex *pipex)
 {
 	int		i;
@@ -48,11 +37,14 @@ char	*find_path(char *cmd, char **envp, t_pipex *pipex)
 		free(pipex->path_from_envp);
 		i++;
 	}
-	i = 0;
+	//i = 0;
 	ft_free(pipex->my_paths);
 	return (NULL);
 }
 
+/* access checks whether the calling process can access 
+the file pathname. Execve executes the program referred
+to by pathname.*/
 void	check_path(char **envp, t_pipex *pipex, char **cmd)
 {
 	if (pipex->path == NULL)
