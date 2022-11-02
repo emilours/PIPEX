@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 19:56:51 by eminatch          #+#    #+#             */
-/*   Updated: 2022/11/02 14:33:03 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/11/02 20:09:58 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ char	*find_path(char *cmd, char **envp, t_pipex *pipex)
 		return (cmd);
 	while (envp[i] && ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
-	if (envp[i])
-		pipex->my_paths = ft_split(envp[i] + 5, ':');
+	if (!envp[i])
+		return (NULL);
+	pipex->my_paths = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (pipex->my_paths && pipex->my_paths[i])
 	{
@@ -79,6 +80,7 @@ void	cmd_process(char *argv, char **envp, t_pipex *pipex)
 		exit(127);
 	}
 	cmd = ft_split(argv, ' ');
-	pipex->path = find_path(cmd[0], envp, pipex);
+	if (*envp != NULL)
+		pipex->path = find_path(cmd[0], envp, pipex);
 	check_path(envp, pipex, cmd);
 }

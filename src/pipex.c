@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 19:57:06 by eminatch          #+#    #+#             */
-/*   Updated: 2022/11/02 15:22:58 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/11/02 20:02:55 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 /* Open creates a new open file description, with flags.
  Dup allocates a new fd that refers to the same open fd as the oldfd.
- What is written is kept until reading. */
+ What is written is kept until reading.
+pipefd[0] = read and pipefd[1] = write */
 void	infile_process(char **argv, int i, t_pipex *pipex)
 {
 	if (i == 0)
@@ -24,6 +25,8 @@ void	infile_process(char **argv, int i, t_pipex *pipex)
 		{
 			ft_err(argv[1], strerror(errno));
 			write(2, "\n", 1);
+			close(pipex->pipefd[1]);
+			close(pipex->pipefd[0]);
 			exit(errno);
 		}
 		dup2(pipex->pipefd[1], STDOUT_FILENO);
@@ -42,6 +45,8 @@ void	outfile_process(char **argv, int i, t_pipex *pipex)
 		{
 			ft_err(argv[4], strerror(errno));
 			write(2, "\n", 1);
+			close(pipex->pipefd[1]);
+			close(pipex->pipefd[0]);
 			exit(1);
 		}
 		dup2(pipex->pipefd[0], STDIN_FILENO);
