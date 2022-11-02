@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 19:56:51 by eminatch          #+#    #+#             */
-/*   Updated: 2022/11/01 17:43:49 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:33:03 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	*find_path(char *cmd, char **envp, t_pipex *pipex)
 		free(pipex->path_from_envp);
 		i++;
 	}
-	//i = 0;
 	ft_free(pipex->my_paths);
 	return (NULL);
 }

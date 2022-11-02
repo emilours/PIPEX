@@ -6,14 +6,15 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 19:57:06 by eminatch          #+#    #+#             */
-/*   Updated: 2022/11/01 17:28:39 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:22:58 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
 /* Open creates a new open file description, with flags.
- Dup allocates a new fd that refers to the same open fd as the oldfd*/
+ Dup allocates a new fd that refers to the same open fd as the oldfd.
+ What is written is kept until reading. */
 void	infile_process(char **argv, int i, t_pipex *pipex)
 {
 	if (i == 0)
