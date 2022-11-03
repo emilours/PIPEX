@@ -6,7 +6,7 @@
 #    By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/10 19:42:17 by eminatch          #+#    #+#              #
-#    Updated: 2022/11/01 13:50:15 by eminatch         ###   ########.fr        #
+#    Updated: 2022/11/03 17:10:37 by eminatch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = libft.a
 SRC_PATH    = src/
 OBJ_PATH    = obj/
 
-CC = clang
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3 -MMD -MP
 
 SRC = ft_isalpha.c \

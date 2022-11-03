@@ -6,7 +6,7 @@
 /*   By: eminatch <eminatch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 15:31:45 by eminatch          #+#    #+#             */
-/*   Updated: 2022/11/01 17:07:58 by eminatch         ###   ########.fr       */
+/*   Updated: 2022/11/03 17:10:01 by eminatch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_strddup(const char *s, char c)
 	return (str);
 }
 
-char static	**ft_free(char **tab, int i)
+static char	**ft_free(char **tab, int i)
 {
 	while (i >= 0)
 	{
