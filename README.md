@@ -1,7 +1,6 @@
 
-# Project Title
+# 🚰 42 Paris - Pipex: Mastering the Shell, One Pipe at a Time 🔗💻
 
-🚰 42 Paris - Pipex: Mastering the Shell, One Pipe at a Time 🔗💻
 ## 🚀 Project overview
 
 Pipex is a project that replicates the behavior of a Unix shell's pipe (|) mechanism. It allows you to execute two commands in sequence, where the output of the first command becomes the input of the second, just like the shell does with piping.
